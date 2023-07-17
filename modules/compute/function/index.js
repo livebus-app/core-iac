@@ -19,8 +19,7 @@ export const handler = async (data) => {
           Name: key,
         },
       },
-      MaxLabels: 100,
-      MinConfidence: 90,
+
     };
 
     const { Labels: labels } = await rekognition.detectLabels(rekognitionParams).promise();
