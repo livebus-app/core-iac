@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "lvb-terraform-state"
+    bucket = "livebus-terraform-state"
     key    = "terraform.tfstate"
     region = "us-east-1"
   }
