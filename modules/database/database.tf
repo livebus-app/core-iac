@@ -1,6 +1,6 @@
 resource "aws_db_instance" "lvb-main-database" {
   identifier              = "lvb-main-database"
-  db_name                 = "lvb-main-database"
+  db_name                 = "main"
   instance_class          = "db.t3.micro"
   allocated_storage       = 5
   engine                  = "postgres"

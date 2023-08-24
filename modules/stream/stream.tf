@@ -1,9 +1,9 @@
-resource "aws_sns_topic" "live-digest" {
-  name = "live-digest"
+resource "aws_sns_topic" "label-analysis" {
+  name = "label-analysis"
 }
 
-resource "aws_sns_topic_subscription" "live-digest" {
-  topic_arn = aws_sns_topic.live-digest.arn
+resource "aws_sns_topic_subscription" "label-analysis" {
+  topic_arn = aws_sns_topic.label-analysis.arn
   protocol  = "lambda"
   endpoint  = var.sns-lambda-arn
 }
@@ -13,7 +13,7 @@ resource "aws_lambda_permission" "with_sns" {
     action = "lambda:InvokeFunction"
     function_name = "${var.sns-lambda-name}"
     principal = "sns.amazonaws.com"
-    source_arn = "${aws_sns_topic.live-digest.arn}"
+    source_arn = "${aws_sns_topic.label-analysis.arn}"
 }
 
 // eventbridge pipeline

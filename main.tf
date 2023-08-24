@@ -22,8 +22,8 @@ module "database" {
 
 module "stream" {
   source          = "./modules/stream"
-  sns-lambda-arn  = module.compute.live-digest-lambda-arn
-  sns-lambda-name = module.compute.live-digest-lambda-name
+  sns-lambda-arn  = module.compute.label-analysis-lambda-arn
+  sns-lambda-name = module.compute.label-analysis-lambda-name
 }
 
 module "compute" {

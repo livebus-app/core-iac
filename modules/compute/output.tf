@@ -1,9 +1,9 @@
 // create output terraform
 
-output "live-digest-lambda-arn" {
-  value = aws_lambda_function.live-digest.arn
+output "label-analysis-lambda-arn" {
+  value = aws_lambda_function.label-analysis.arn
 }
 
-output "live-digest-lambda-name" {
-  value = aws_lambda_function.live-digest.function_name
+output "label-analysis-lambda-name" {
+  value = aws_lambda_function.label-analysis.function_name
 }
