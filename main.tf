@@ -1,6 +1,8 @@
 terraform {
-  backend "local" {
-    path = "values.tfstate"
+  backend "s3" {
+    bucket = "lvb-terraform-state"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
   }
 }
 
