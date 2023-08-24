@@ -1,25 +1,23 @@
-// create bucket live-digest
-
-resource "aws_db_instance" "livebus" {
-  identifier             = "livebus"
-  db_name = "livebus"
-  instance_class         = "db.t3.micro"
-  allocated_storage      = 5
-  engine                 = "postgres"
-  engine_version         = "15"
-  skip_final_snapshot    = true
-  publicly_accessible    = true
-  vpc_security_group_ids = [var.pg-security-group-id]
-  username = "root"
-  password = "root12345"
+resource "aws_db_instance" "lvb-main-database" {
+  identifier              = "lvb-main-database"
+  db_name                 = "lvb-main-database"
+  instance_class          = "db.t3.micro"
+  allocated_storage       = 5
+  engine                  = "postgres"
+  engine_version          = "15"
+  skip_final_snapshot     = true
+  publicly_accessible     = true
+  vpc_security_group_ids  = [var.pg-security-group-id]
+  username                = "root"
+  password                = "root12345"
   backup_retention_period = 0
   db_subnet_group_name    = var.pg-subnet-group-name
 }
 
 resource "aws_dynamodb_table" "lvb-analysis-payload" {
-  name           = "lvb-analysis-payload"
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "id"
+  name         = "lvb-analysis-payload"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "id"
   attribute {
     name = "id"
     type = "S"
