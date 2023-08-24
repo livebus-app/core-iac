@@ -1,0 +1,49 @@
+name: 'Terraform'
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: production
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Terraform Init
+      working-directory: ./terraform
+      run: terraform init
+      
+    - name: Terraform Format
+      working-directory: ./terraform
+      run: terraform fmt
+
+    - name: Terraform Plan
+      working-directory: ./terraform
+      run: terraform plan -input=false
+
+    - name: Echo ref
+      run: echo ${{ github.ref }} ${{ github.event_name }}
+
+    - name: Terraform Apply
+      working-directory: ./terraform
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform destroy -auto-approve -input=false
