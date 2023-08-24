@@ -1,9 +1,11 @@
 terraform {
-  backend "s3" {
-    bucket = "livebus-terraform-state-2023"
-    key    = "terraform.tfstate"
-    region = "us-east-1" 
+  backend "local" {
+    path = "values.tfstate"
   }
+}
+
+provider "aws" {
+  region = "us-east-1"
 }
 
 module "network" {
@@ -11,10 +13,15 @@ module "network" {
 }
 
 module "database" {
-  source                = "./modules/database"
-  rds-subnet-group-name = module.network.rds-subnet-group-name
-  rds-security-group-id = module.network.rds-security-group-id
-  object-digest-lambda-arn = module.compute.object-digest-lambda-arn
+  source               = "./modules/database"
+  pg-subnet-group-name = module.network.pg-subnet-group-name
+  pg-security-group-id = module.network.pg-security-group-id
+}
+
+module "stream" {
+  source = "./modules/stream"
+  sns-lambda-arn = module.compute.live-digest-lambda-arn
+  sns-lambda-name = module.compute.live-digest-lambda-name
 }
 
 module "compute" {

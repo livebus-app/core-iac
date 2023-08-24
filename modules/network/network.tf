@@ -29,37 +29,37 @@ resource "aws_route_table" "livebus-public-route-table" {
 }
 
 resource "aws_route_table_association" "livebus-public-route-table-association" {
-  subnet_id      = aws_subnet.livebus-public-rds-subnet.id
+  subnet_id      = aws_subnet.livebus-public-pg-subnet.id
   route_table_id = aws_route_table.livebus-public-route-table.id
 }
 
 resource "aws_route_table_association" "livebus-public-route-table-association-2" {
-  subnet_id      = aws_subnet.livebus-public-rds-subnet-2.id
+  subnet_id      = aws_subnet.livebus-public-pg-subnet-2.id
   route_table_id = aws_route_table.livebus-public-route-table.id
 }
 
-resource "aws_subnet" "livebus-public-rds-subnet" {
+resource "aws_subnet" "livebus-public-pg-subnet" {
   vpc_id     = aws_vpc.livebus-vpc.id
   cidr_block = "10.0.0.0/24"
   availability_zone = "us-east-1a"
 
   tags = {
-    Name = "livebus-public-rds-subnet"
+    Name = "livebus-public-pg-subnet"
   }
 }
 
-resource "aws_subnet" "livebus-public-rds-subnet-2" {
+resource "aws_subnet" "livebus-public-pg-subnet-2" {
   vpc_id     = aws_vpc.livebus-vpc.id
   cidr_block = "10.0.1.0/24"
   availability_zone = "us-east-1b"
 
   tags = {
-    Name = "livebus-public-rds-subnet"
+    Name = "livebus-public-pg-subnet"
   }
 }
 
-resource "aws_security_group" "livebus-rds-sg" {
-  name        = "livebus-rds-sg"
+resource "aws_security_group" "livebus-pg-sg" {
+  name        = "livebus-pg-sg"
   description = "Allow RDS access"
   vpc_id      = aws_vpc.livebus-vpc.id
 
@@ -78,15 +78,15 @@ resource "aws_security_group" "livebus-rds-sg" {
   }
 
   tags = {
-    Name = "livebus-rds-sg"
+    Name = "livebus-pg-sg"
   }
 }
 
-resource "aws_db_subnet_group" "livebus-rds-subnet-group" {
-  name       = "livebus-rds-subnet-group"
-  subnet_ids = [aws_subnet.livebus-public-rds-subnet.id, aws_subnet.livebus-public-rds-subnet-2.id]
+resource "aws_db_subnet_group" "livebus-pg-subnet-group" {
+  name       = "livebus-pg-subnet-group"
+  subnet_ids = [aws_subnet.livebus-public-pg-subnet.id, aws_subnet.livebus-public-pg-subnet-2.id]
 
   tags = {
-    Name = "livebus-rds-subnet-group"
+    Name = "livebus-pg-subnet-group"
   }
 }
