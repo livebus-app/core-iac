@@ -26,7 +26,6 @@ resource "aws_dynamodb_table" "lvb-analysis-payload" {
 
 resource "aws_s3_bucket" "livebus-frames-storage" {
   bucket = "lvb-frames-storage"
-  acl    = "private"
   tags = {
     Name = "lvb-frames-storage"
   }
