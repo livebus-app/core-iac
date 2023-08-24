@@ -48,5 +48,5 @@ resource "aws_lambda_function" "label-analysis" {
   image_uri     = "033809494047.dkr.ecr.us-east-1.amazonaws.com/label-analysis:latest"
   timeout       = 10
   memory_size   = "128"
-  architectures = ["arm64"]
+  architectures = ["x86_64"]
 }

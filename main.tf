@@ -22,8 +22,6 @@ module "database" {
 
 module "stream" {
   source          = "./modules/stream"
-  sns-lambda-arn  = module.compute.label-analysis-lambda-arn
-  sns-lambda-name = module.compute.label-analysis-lambda-name
 }
 
 module "compute" {
